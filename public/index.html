@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+    <style>
+    body {
+        background: #6190E8;
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #A7BFE8, #6190E8);
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #A7BFE8, #6190E8);
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background-size: auto 500%;
+        background-repeat: no-repeat;
+    }
+    
+    .events {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 75%;
+    }
+    
+    .ui.cards {
+        margin: 0 5% 0 5%;
+    }
+    
+    #panel-top {
+        margin-bottom: 0;
+        background-color: #50514F;
+        color: white;
+        text-align: center;
+        margin-top: 5%;
+    }
+    
+    #event {
+        margin-top: 0;
+        background-color: #DCDCDD;
+    }
+    
+    #header {
+        width: 100%;
+        background-color: #628395;
+        padding: 0;
+        font-size: 75px;
+        font-family: 'Lobster', cursive;
+        height: 100px;
+    }
+    
+    #search {
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .results.transition.visible {
+        text-align: center;
+        position: absolute;
+        width: 100%;
+    }
+    
+    #upload {
+        width: 30%;
+        margin-left: 35%;
+        margin-right: 35%;
+        text-align: center;
+    }
+    
+    #middle {
+        display: inline-block;
+        width: 100%;
+        padding-top: 2%;
+    }
+    
+    #title {
+        color: #D0E1D4;
+        text-align: center;
+    }
+    
+    #footer {
+        background-color: #2c3e50;
+        color: rgba(255, 255, 255, .7);
+        text-align: center;
+        margin-bottom: 0;
+        padding-top: 20px;
+        padding-bottom: 10px;
+        margin-top: 20px;
+    }
+    
+    .ui.divider {
+        padding: .5px;
+        background-color: #628395;
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    
+    #container {
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        background-color: rgba(255, 255, 255, .7);
+        background: -webkit-linear-gradient(to bottom, rgba(255, 255, 255, .7), rgba(255, 255, 255, .9));
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, rgba(255, 255, 255, .7), rgba(255, 255, 255, .9));
+    }
+    
+    #file {
+        padding: 5px;
+        color: rgba(0, 0, 0, 0);
+        opacity: 0;
+        position: absolute;
+        left: 0;
+    }
+    
+    .ui.button:hover {
+        background-color: #636363;
+        color: white;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <div>
+                <p id="title">Cardr</p>
+            </div>
+        </div>
+        <div id="middle">
+            <div id="search" class="ui search">
+                <input id="searchfield" style="width:50%;" class="prompt" type="text" placeholder="Search for a company">
+                <div class="results"></div>
+            </div>
+
+            <form ref='uploadForm' 
+      id='uploadForm' 
+      action='/upload' 
+      method='post' 
+      encType="multipart/form-data">
+        <div id="upload">
+                <input class="hidden" name="sampleFile" type="file" id="file">
+                <label class="ui button" for="file">Select file</label>
+                <input class="ui button" type='submit' id="submit" value='Upload' />
+                <input class="ui button" onclick="y(this)" type="button" id="manual" value='Manual' />
+            </div>
+    </form>  
+            
+        </div>
+        <div class="ui divider"></div>
+        <div class="container">
+            <div id="eventcontainer" class="events">
+            </div>
+        </div>
+        <div id="footer">
+            <p id="footer-text">Made at Bitcamp 2017</p>
+        </div>
+        <div id="textModal" class="ui modal">
+            <i class="close icon"></i>
+            <div class="header">
+                Text Yourself Info
+            </div>
+            <div class="image content">
+                <div class="description">
+                    <p>Enter your phone number and carrier info to have the info on this card texted to you.</p>
+                    <div class="ui form">
+                        <div class="inline fields">
+                            <label>Phone Number</label>
+                            <div class="field">
+                                <input id="phonefieldtosend" type="text" placeholder="(xxx)-xxx-xxxx">
+                            </div>
+                            <div class="field">
+                                <select class="ui dropdown">
+                                    <option value="">Carrier</option>
+                                    <option value="0">ATT</option>
+                                    <option value="1">T-Mobile</option>
+                                    <option value="2">Verizon</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div id="sendMessage" class="ui positive right labeled icon button">
+                    Send!
+                    <i class="checkmark icon"></i>
+                </div>
+            </div>
+        </div>
+        <div id="uploadModal" class="ui modal">
+            <i class="close icon"></i>
+            <div class="header">
+                Business Card
+            </div>
+            <div class="image content">
+                <div class="description">
+                    <p>Enter the info from the business card here. Google CV is running in the back and it should autofill everything it finds.</p>
+                    <div class="ui form">
+                        <label>Event</label>
+                        <div class="field">
+                            <input id="eventfield" type="text">
+                        </div>
+                        <label>Name</label>
+                        <div class="field">
+                            <input id="namefield" type="text">
+                        </div>
+                        <label>Company</label>
+                        <div class="field">
+                            <input id="companyfield" type="text">
+                        </div>
+                        <label>Title</label>
+                        <div class="field">
+                            <input id="titlefield" type="text">
+                        </div>
+                        <label>Email</label>
+                        <div class="field">
+                            <input id="emailfield" type="text">
+                        </div>
+                        <label>Phone Number</label>
+                        <div class="field">
+                            <input id="phonefield" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div id="uploadData" class="ui positive right labeled icon button">
+                    Upload!
+                    <i class="checkmark icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var content = []
+
+    function load() {
+        $.ajax({
+            type: "GET",
+            url: "/getInfo",
+            success: function(data) {
+                console.log(data);
+                var arr = [];
+                for (var e in data.events) {
+                    arr.push(e)
+                }
+                for (var i in arr) {
+                    var eventObj = data.events[arr[i]];
+                    var eventContainer = $('#eventcontainer');
+                    var eventStr =
+                        `<div id="panel-top" class="ui raised segment">
+                        <h3>` + arr[i] + `</h3>
+                        </div>
+                        <div id="event" class="ui raised segment">
+                        <div id="` + arr[i] + `-business-cards" class="ui cards">
+                        </div>
+                    </div>`;
+                    eventcontainer.innerHTML = eventcontainer.innerHTML + eventStr;
+                    console.log('The Name of the Event is: ' + arr[i]);
+                    content.push({
+                        title: arr[i]
+                    })
+                    updateSearch()
+                    var keysArr = Object.keys(eventObj);
+                    for (var a in keysArr) {
+                        var card = eventObj[keysArr[a]];
+                        var cardcontainer = document.getElementById(arr[i] + '-business-cards');
+                        var cardStr =
+                            `<div class="card">
+                        <div class="content">
+                            <div class="header">` +
+                            card.name + `</div>
+                            <div class="meta">` +
+                            card.company + `</div>
+                            <div class="description">` +
+                            card.title + `</div>
+                        <br>
+                            <div class="description">` +
+                            card.email + `</div>
+                            <div class="description">` +
+                            card.phone + `</div>
+                        </div>
+                        <div class="extra content">
+                                <div id="` + card.name + ',' + card.company + ',' + card.title + ',' + card.email + ',' + card.phone + `" onclick="x(this)" class="blue ui right labeled icon button">Send<i class="right arrow icon"></i></div>
+                            </div>
+                        </div>
+                    </div>`
+                        cardcontainer.innerHTML = cardcontainer.innerHTML + cardStr;
+                        console.log(card.name);
+                    }
+                    console.log();
+                }
+            }
+        });
+    }
+
+
+
+    $("#searchfield").keyup(function(event) {
+        if (event.keyCode == 13) {
+            var searchfield = $('#searchfield').val();
+            if (searchfield === "")
+                searchfield = "empty"
+            $("#eventcontainer").empty();
+            $.ajax({
+                type: "GET",
+                url: "/search/" + searchfield,
+                success: function(data) {
+                    console.log(searchfield);
+                    var arr = [];
+                    for (var e in data.events) {
+                        if (e === searchfield || searchfield === "empty")
+                            arr.push(e)
+                    }
+                    for (var i in arr) {
+                        var eventObj = data.events[arr[i]];
+                        var eventContainer = $('#eventcontainer');
+                        var eventStr =
+                            `<div id="panel-top" class="ui raised segment">
+                        <h3>` + arr[i] + `</h3>
+                        </div>
+                        <div id="event" class="ui raised segment">
+                        <div id="` + arr[i] + `-business-cards" class="ui cards">
+                        </div>
+                    </div>`;
+                        eventcontainer.innerHTML = eventcontainer.innerHTML + eventStr;
+                        console.log('The Name of the Event is: ' + arr[i]);
+                        var keysArr = Object.keys(eventObj);
+                        for (var a in keysArr) {
+                            var card = eventObj[keysArr[a]];
+                            var cardcontainer = document.getElementById(arr[i] + '-business-cards');
+                            var cardStr =
+                                `<div class="card">
+                        <div class="content">
+                            <div class="header">` +
+                                card.name + `</div>
+                            <div class="meta">` +
+                                card.company + `</div>
+                            <div class="description">` +
+                                card.title + `</div>
+                        <br>
+                            <div class="description">` +
+                                card.email + `</div>
+                            <div class="description">` +
+                                card.phone + `</div>
+                        </div>
+                        <div class="extra content">
+                                <div id="` + card.name + ',' + card.company + ',' + card.title + ',' + card.email + ',' + card.phone + `" onclick="x(this)" class="blue ui right labeled icon button">Send<i class="right arrow icon"></i></div>
+                            </div>
+                        </div>
+                    </div>`
+                            cardcontainer.innerHTML = cardcontainer.innerHTML + cardStr;
+                            console.log(card.name);
+                        }
+                        console.log();
+                    }
+                }
+            });
+        }
+    });
+
+    var info;
+    var x = function(a) {
+        $('#textModal')
+            .modal('show');
+        info = a.id.split(',');
+    };
+
+    $("#image").val("");
+
+    var y = function(a) {
+        $('#uploadModal')
+            .modal('show');
+    };
+
+
+
+    var updateSearch = function(a) {
+        $('#search')
+            .search({
+                source: content
+            });
+    };
+
+    $('#uploadData')
+        .on("click", function(){
+            console.log('hello');
+            var json = {
+              event: $('#eventfield').val(),
+              name: $('#namefield').val(),
+              title: $('#titlefield').val(),
+              company: $('#companyfield').val(),
+              phone: $('#phonefield').val(),
+              email: $('#emailfield').val()
+            }
+            $.ajax({
+                    type: "POST",
+                    url: "/cardInfo",
+                    data: json,
+                    success: function(data) {
+                        
+                    }
+                })
+        })
+        
+            
+
+    $('#sendMessage')
+        .on("click", function() {
+            var sendphone = $('#phonefieldtosend').val();
+            var drop = $('.dropdown')
+                .dropdown('get text')
+
+            if (drop.length == 2) {
+                drop = drop[0]
+            }
+            var dataToSend = [info[0], info[1], info[2], info[3], info[4], sendphone, drop];
+            $.ajax({
+                    type: "POST",
+                    url: "/sendMail",
+                    data: {
+                        info: dataToSend
+                    },
+                    success: function(data) {
+                        console.log(data);
+                    }
+                })
+                // console.log(sendphone)
+                // console.log(drop)
+                // console.log(info)
+        })
+
+    load();
+
+    var myInput = document.getElementById('myFileInput');
+
+    function sendPic() {
+        var file = myInput.files[0];
+
+        // Send file here either by adding it to a `FormData` object 
+        // and sending that via XHR, or by simply passing the file into 
+        // the `send` method of an XHR instance.
+    }
+    </script>
+</body>

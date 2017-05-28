@@ -1,0 +1,59 @@
+{
+  "events" : {
+    "Bitcamp" : {
+      "-KhDDVE9zNMy9JwNmHox" : {
+        "company" : "University of Maryland",
+        "email" : "shahvineet98@gmail.com",
+        "name" : "Vineet Shah",
+        "phone" : "240-422-2267",
+        "title" : "Senior Backend Developer"
+      },
+      "-KhDDtPDy9otVAq-RVUl" : {
+        "company" : "University of Maryland",
+        "email" : "shahvineet98@gmail.com",
+        "name" : "Sharvil Parekh",
+        "phone" : "240-422-2267",
+        "title" : "Senior Backend Developer"
+      },
+      "-KhDFxPc5fV2sgJUHLMd" : {
+        "company" : "University of Maryland",
+        "email" : "shahvineet98@gmail.com",
+        "name" : "Sharvil Parekh",
+        "phone" : "240-422-2267",
+        "title" : "Senior Backend Developer"
+      },
+      "-KhDNBqk8HH_FB6mjDTg" : {
+        "company" : "University of Maryland",
+        "email" : "shahvineet98@gmail.com",
+        "name" : "Sharvil Parekh",
+        "phone" : "240-422-2267",
+        "title" : "Senior Backend Developer"
+      },
+      "-KhDNF1o8dmC_vnvZzU4" : {
+        "company" : "University of Maryland",
+        "email" : "shahvineet98@gmail.com",
+        "name" : "Sharvil Parekh",
+        "phone" : "240-422-2267",
+        "title" : "Senior Backend Developer"
+      }
+    },
+    "Hacker Conference" : {
+      "-KhEZOQ_-qdvm2d_naS0" : {
+        "company" : "NYU",
+        "email" : "shahvineet98@gmail.com",
+        "name" : "Kent Ma",
+        "phone" : "123-234-1234",
+        "title" : "Professional Hacker"
+      }
+    },
+    "UMD Career Fair" : {
+      "-KhDNIAY8v2v3lTOI8cb" : {
+        "company" : "University of Maryland",
+        "email" : "shahvineet98@gmail.com",
+        "name" : "Sharvil Parekh",
+        "phone" : "240-422-2267",
+        "title" : "Senior Backend Developer"
+      }
+    }
+  }
+}

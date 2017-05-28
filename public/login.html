@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+</head>
+<style>
+body > .grid {
+    height: 100%;
+    background: #6190E8;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #A7BFE8, #6190E8);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #A7BFE8, #6190E8);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.image {
+    margin-top: -100px;
+}
+
+.column {
+    max-width: 450px;
+}
+</style>
+
+<body>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui image header">
+      <div class="content" style="color: white;">
+        Log-in to your account
+      </div>
+    </h2>
+            <form action="http://s.codepen.io/voltron2112/debug/PqrEPM?" method="get" class="ui large form">
+                <div class="ui stacked secondary  segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input id="user" type="text" name="email" placeholder="E-mail address">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input id="pass" type="password" name="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div id="login" onclick ="location.href = '../main';" class="ui fluid large teal submit button">Login</div>
+                </div>
+                <div class="ui error message"></div>
+            </form>
+            <div class="ui message">
+                New to us? <a href="#" disabled>Register</a>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+$(document)
+    .ready(function() {
+        $('.ui.form')
+            .form({
+                fields: {
+                    email: {
+                        identifier: 'email',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Please enter your e-mail'
+                        }, {
+                            type: 'email',
+                            prompt: 'Please enter a valid e-mail'
+                        }]
+                    },
+                    password: {
+                        identifier: 'password',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Please enter your password'
+                        }, {
+                            type: 'length[6]',
+                            prompt: 'Your password must be at least 6 characters'
+                        }]
+                    }
+                }
+            });
+    });
+
+    // $('#login').click(function() {
+        
+    // })
+</script>
+
+</html>

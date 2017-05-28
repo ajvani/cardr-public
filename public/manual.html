@@ -1,0 +1,94 @@
+<html>
+
+<head>
+    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAMSFvIjfEHpgzYxxIWGJ41ASxynfa6FCA",
+        authDomain: "bizzcard-d9c3c.firebaseapp.com",
+        databaseURL: "https://bizzcard-d9c3c.firebaseio.com",
+        projectId: "bizzcard-d9c3c",
+        storageBucket: "bizzcard-d9c3c.appspot.com",
+        messagingSenderId: "887702527695"
+    };
+    firebase.initializeApp(config);
+    </script>
+</head>
+
+<body>
+    <div class="ui label">
+        Event:
+    </div>
+    <div class="ui input">
+        <input id="event" type="text" value="Bitcamp" placeholder="Event">
+    </div>
+    <br>
+    <div class="ui label">
+        Name:
+    </div>
+    <div class="ui input">
+        <input id="name" type="text" value="Vineet Shah" placeholder="Name">
+    </div>
+    <br>
+    <div class="ui label">
+        Title:
+    </div>
+    <div class="ui input">
+        <input id="title" type="text" value="Senior Backend Developer" placeholder="Title">
+    </div>
+    <br>
+    <div class="ui label">
+        Company:
+    </div>
+    <div class="ui input">
+        <input id="company" type="text" value="University of Maryland" placeholder="Company">
+    </div>
+    <br>
+    <div class="ui label">
+        Phone:
+    </div>
+    <div class="ui input">
+        <input id="phone" type="text" value="240-422-2267" placeholder="Phone">
+    </div>
+    <br>
+    <div class="ui label">
+        Email:
+    </div>
+    <div class="ui input">
+        <input id="email" type="text" value="shahvineet98@gmail.com" placeholder="Email">
+    </div>
+    <br>
+    <button id="submit" class="ui button">Submit</button>
+</body>
+<script>
+$("#submit").click(function() {
+            console.log($('#event').val());
+            console.log($('#name').val());
+            console.log($('#title').val());
+            console.log($('#company').val());
+            console.log($('#phone').val());
+            console.log($('#email').val());
+            var json = {
+              event: $('#event').val(),
+              name: $('#name').val(),
+              title: $('#title').val(),
+              company: $('#company').val(),
+              phone: $('#phone').val(),
+              email: $('#email').val()
+            }
+            //console.log(json);
+            $.ajax({
+                type: "POST",
+                url: "/cardInfo",
+                data: json,
+                success: function(data) {
+                  //console.log(data);
+                }
+            });
+          });
+</script>
+
+</html>
